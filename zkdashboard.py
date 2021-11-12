@@ -30,11 +30,11 @@ config['db'] = {
 }
 
 config['files'] = {
-    'zk_path': '/Users/will/Dropbox/zettelkasten/'
+    'zk_path': '/Users/will/Dropbox/zettelkasten/',
     'slogan_path': '/Users/will/Dropbox/zettelkasten/Super Slogans 202012281549.md'
 }
 
-#Write default zkdb.ini
+# Write default zkdb.ini
 
 # with open('./zkdb.ini', 'w') as f:
 #     config.write(f)
