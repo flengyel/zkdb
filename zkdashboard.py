@@ -10,10 +10,40 @@ from datetime import timedelta
 import random
 from dateutil.relativedelta import relativedelta
 import pyperclip
+from configparser import ConfigParser
+
+
+# Build zkdb.ini
+
+config = ConfigParser()
+
+config['settings'] = {
+    'debug': 'true',
+    'secret_key': 'abc123',
+    'log_path': '/my_app/log'
+}
+
+config['db'] = {
+    'db_name': 'myapp_dev',
+    'db_host': 'localhost',
+    'db_port': '8889'
+}
+
+config['files'] = {
+    'zk_path': '/Users/will/Dropbox/zettelkasten/'
+    'slogan_path': '/Users/will/Dropbox/zettelkasten/Super Slogans 202012281549.md'
+}
+
+#Write default zkdb.ini
+
+# with open('./zkdb.ini', 'w') as f:
+#     config.write(f)
+
+config.read('zkdb.ini')
 
 # path to zettelkasten
 
-target_dir = pathlib.Path("/Users/will/Dropbox/zettelkasten/")
+target_dir = pathlib.Path(config.get('files', 'zk_path'))
 
 # Regex
 
@@ -58,7 +88,7 @@ with open("/Users/will/Dropbox/zettelkasten/Super Slogans 202012281549.md") as f
     lines = []
     for line in file_in:
         lines.append(line[:-1])
-    sample = random.sample(lines, 3)
+    sample = random.sample(lines, 2)
 ss = ('\n'.join(sample))
 
 
