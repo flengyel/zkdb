@@ -11,35 +11,51 @@ import random
 from dateutil.relativedelta import relativedelta
 import pyperclip
 from configparser import ConfigParser
+from pathlib import Path
 
-
-# Build zkdb.ini
 
 config = ConfigParser()
 
-config['settings'] = {
-    'debug': 'true',
-    'secret_key': 'abc123',
-    'log_path': '/my_app/log'
-}
+# Build zkdb.ini not overwriting custom
 
-config['db'] = {
-    'db_name': 'myapp_dev',
-    'db_host': 'localhost',
-    'db_port': '8889'
-}
+path_to_file = 'zkdb.ini'
+path = Path(path_to_file)
+if not path.is_file():
+    config['settings'] = {
+        'slogans': 'true',
+        'slogan_lines': '1',
+        'memento_mori': 'true'
+    }
 
-config['files'] = {
-    'zk_path': '/Users/will/Dropbox/zettelkasten/',
-    'slogan_path': '/Users/will/Dropbox/zettelkasten/Super Slogans 202012281549.md'
-}
+    config['dates'] = {
+        'birth': '2020, 1, 1',
+        'eighty': '2100, 1, 1',
+        'zk_day0': '2020, 1, 2'
+    }
 
-# Write default zkdb.ini
+    config['tag_tracking'] = {
+        'tbooks': '#book',
+        'tblogs': '#blog-post',
+        'tarticle': '#article',
+        'tproof': '#proof',
+        'tvideo': '#video',
+        'ttwodo': '#2do'
+    }
 
-# with open('./zkdb.ini', 'w') as f:
-#     config.write(f)
 
-config.read('zkdb.ini')
+    config['files'] = {
+        'slogan_path': '/Users/will/Dropbox/zettelkasten/Super Slogans 202012281549.md',
+        'zk_path': '/Users/will/Dropbox/zettelkasten/',
+        'slogan_path': '/Users/will/Dropbox/zettelkasten/Super Slogans 202012281549.md'
+    }
+
+    # Write default zkdb.ini
+
+    with open('./zkdb.ini', 'w') as f:
+        config.write(f)
+else:
+
+    config.read('zkdb.ini')
 
 # path to zettelkasten
 
